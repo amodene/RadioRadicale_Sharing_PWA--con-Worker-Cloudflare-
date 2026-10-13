@@ -27,7 +27,7 @@
       <button id="btn-today" class="btn-secondary">Oggi</button>
     </section>
 
-    <div id="status-container" class="status-container" hidden>
+    <div id="status-container" class="status-container" style="display: none;">
       <div id="spinner" class="spinner"></div>
       <p id="status-message">Caricamento palinsesto...</p>
     </div>
@@ -35,8 +35,8 @@
     <ul id="schedule-list" class="schedule-list" role="list"></ul>
   </main>
 
-  <!-- Bottom Sheet / Modal Composer Condivisione -->
-  <div id="share-modal-overlay" class="modal-overlay" hidden>
+  <!-- Bottom Sheet Modale Condivisione (Bloccato con display: none inline) -->
+  <div id="share-modal-overlay" class="modal-overlay" style="display: none;">
     <div class="bottom-sheet" role="dialog" aria-labelledby="modal-title">
       <div class="sheet-header">
         <h2 id="modal-title">Condividi Trasmissione</h2>
@@ -59,7 +59,8 @@
     </div>
   </div>
 
-  <div id="toast" class="toast" role="alert" hidden></div>
+  <!-- Toast Notifiche (Bloccato con display: none inline) -->
+  <div id="toast" class="toast" role="alert" style="display: none;"></div>
 
   <script src="app.js"></script>
 </body>

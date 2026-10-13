@@ -22,7 +22,7 @@ const btnModalMail = document.getElementById("btn-modal-mail");
 
 let activeShareItem = null;
 
-// Calcolo data locale per evitare il bug UTC (off-by-one a mezzanotte)
+// Calcolo data locale conforme al Timezone Locale (evita il bug UTC)
 function getLocalDateString(date = new Date()) {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -58,7 +58,7 @@ function renderSchedule(items) {
     return;
   }
 
-  statusContainer.hidden = true;
+  statusContainer.style.display = "none";
   scheduleList.innerHTML = "";
 
   items.forEach((item) => {
@@ -92,7 +92,7 @@ function renderSchedule(items) {
       const actions = document.createElement("div");
       actions.className = "item-actions";
 
-      // 1. Apertura diretta in una nuova scheda nel browser mobile
+      // 1. Apertura diretta in una nuova scheda nel browser
       const btnListen = document.createElement("a");
       btnListen.className = "btn-action";
       btnListen.href = item.shareUrl;
@@ -116,16 +116,17 @@ function renderSchedule(items) {
   });
 }
 
+// Gestione Modale Bottom Sheet
 function openShareComposer(item) {
   activeShareItem = item;
   shareNoteInput.value = "";
   updateSharePreview();
-  shareModalOverlay.hidden = false;
+  shareModalOverlay.style.display = "flex"; // Apertura esplicita
   shareNoteInput.focus();
 }
 
 function closeShareComposer() {
-  shareModalOverlay.hidden = true;
+  shareModalOverlay.style.display = "none"; // Chiusura esplicita
   activeShareItem = null;
 }
 
@@ -161,6 +162,7 @@ shareModalOverlay.addEventListener("click", (e) => {
   if (e.target === shareModalOverlay) closeShareComposer();
 });
 
+// Condivisione Nativa
 btnModalShare.addEventListener("click", async () => {
   if (!activeShareItem) return;
   const fullText = buildShareMessage(activeShareItem, shareNoteInput.value);
@@ -182,6 +184,7 @@ btnModalShare.addEventListener("click", async () => {
   }
 });
 
+// Copia negli Appunti
 btnModalCopy.addEventListener("click", () => {
   if (!activeShareItem) return;
   const fullText = buildShareMessage(activeShareItem, shareNoteInput.value);
@@ -202,23 +205,25 @@ function copyToClipboard(text) {
 
 function showToast(msg) {
   toast.textContent = msg;
-  toast.hidden = false;
+  toast.style.display = "block";
   setTimeout(() => {
-    toast.hidden = true;
+    toast.style.display = "none";
   }, 2500);
 }
 
 function setLoading(isLoading) {
-  statusContainer.hidden = !isLoading;
-  document.getElementById("spinner").hidden = !isLoading;
+  statusContainer.style.display = isLoading ? "block" : "none";
+  document.getElementById("spinner").style.display = isLoading
+    ? "block"
+    : "none";
   if (isLoading) {
     statusMessage.textContent = "Download palinsesto...";
   }
 }
 
 function showStatus(msg, isError = false) {
-  statusContainer.hidden = false;
-  document.getElementById("spinner").hidden = true;
+  statusContainer.style.display = "block";
+  document.getElementById("spinner").style.display = "none";
   statusMessage.textContent = msg;
   statusMessage.style.color = isError ? "#f44336" : "var(--text-muted)";
 }
