@@ -1,10 +1,3 @@
-/* ==============================================================================
-   RESET & REGOLA GLOBALE MANDATORIA PER ATTRIBUTO HIDDEN
-   ============================================================================== */
-[hidden] {
-    display: none !important;
-}
-
 :root {
     --primary: #d32f2f;
     --primary-hover: #b71c1c;
@@ -192,7 +185,9 @@ button {
     font-weight: 500;
 }
 
-/* Modal Bottom Sheet */
+/* ==============================================================================
+   GESTIONE MODALE A CLASSI: Nascosto di default, Flex solo se .active
+   ============================================================================== */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -200,10 +195,16 @@ button {
     right: 0;
     bottom: 0;
     background-color: var(--overlay);
-    display: flex;
+    display: none;
+    /* NASCOSTO DI DEFAULT */
     justify-content: center;
     align-items: flex-end;
     z-index: 1000;
+}
+
+.modal-overlay.active {
+    display: flex !important;
+    /* VISIBILE QUANDO ATTIVO */
 }
 
 .bottom-sheet {
@@ -339,6 +340,7 @@ button {
 .status-container {
     text-align: center;
     padding: 40px 0;
+    display: none;
 }
 
 .spinner {
@@ -357,6 +359,9 @@ button {
     }
 }
 
+/* ==============================================================================
+   TOAST A CLASSI
+   ============================================================================== */
 .toast {
     position: fixed;
     bottom: 20px;
@@ -369,4 +374,10 @@ button {
     font-size: 0.85rem;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
     z-index: 1100;
+    display: none;
+    /* NASCOSTO DI DEFAULT */
+}
+
+.toast.active {
+    display: block !important;
 }

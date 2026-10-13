@@ -9,6 +9,7 @@ const btnToday = document.getElementById("btn-today");
 const scheduleList = document.getElementById("schedule-list");
 const statusContainer = document.getElementById("status-container");
 const statusMessage = document.getElementById("status-message");
+const spinner = document.getElementById("spinner");
 const toast = document.getElementById("toast");
 
 // Elementi Modal Share Composer
@@ -116,17 +117,17 @@ function renderSchedule(items) {
   });
 }
 
-// Gestione Modale Bottom Sheet
+// Apertura e Chiusura Modale (Toast) tramite classe CSS .active
 function openShareComposer(item) {
   activeShareItem = item;
   shareNoteInput.value = "";
   updateSharePreview();
-  shareModalOverlay.style.display = "flex"; // Apertura esplicita
+  shareModalOverlay.classList.add("active"); // Mostra il modale
   shareNoteInput.focus();
 }
 
 function closeShareComposer() {
-  shareModalOverlay.style.display = "none"; // Chiusura esplicita
+  shareModalOverlay.classList.remove("active"); // Nasconde il modale
   activeShareItem = null;
 }
 
@@ -205,17 +206,15 @@ function copyToClipboard(text) {
 
 function showToast(msg) {
   toast.textContent = msg;
-  toast.style.display = "block";
+  toast.classList.add("active");
   setTimeout(() => {
-    toast.style.display = "none";
+    toast.classList.remove("active");
   }, 2500);
 }
 
 function setLoading(isLoading) {
   statusContainer.style.display = isLoading ? "block" : "none";
-  document.getElementById("spinner").style.display = isLoading
-    ? "block"
-    : "none";
+  spinner.style.display = isLoading ? "block" : "none";
   if (isLoading) {
     statusMessage.textContent = "Download palinsesto...";
   }
@@ -223,7 +222,7 @@ function setLoading(isLoading) {
 
 function showStatus(msg, isError = false) {
   statusContainer.style.display = "block";
-  document.getElementById("spinner").style.display = "none";
+  spinner.style.display = "none";
   statusMessage.textContent = msg;
   statusMessage.style.color = isError ? "#f44336" : "var(--text-muted)";
 }

@@ -1,4 +1,4 @@
-const CACHE_NAME = "radicale-shell-v4"; // <-- Modifica obbligatoria per forzare l'invalidazione della cache
+const CACHE_NAME = "radicale-shell-v5";
 const STATIC_ASSETS = [
   "./",
   "./index.html",
@@ -9,9 +9,21 @@ const STATIC_ASSETS = [
   "./icons/icon-512.png",
 ];
 
+// Installazione Resiliente: non fallisce se un'icona manca (404)
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(STATIC_ASSETS)),
+    caches.open(CACHE_NAME).then((cache) => {
+      return Promise.allSettled(
+        STATIC_ASSETS.map((asset) =>
+          cache.add(asset).catch((err) => {
+            console.warn(
+              `Risorsa non trovata (saltata dalla cache): ${asset}`,
+              err,
+            );
+          }),
+        ),
+      );
+    }),
   );
   self.skipWaiting();
 });
