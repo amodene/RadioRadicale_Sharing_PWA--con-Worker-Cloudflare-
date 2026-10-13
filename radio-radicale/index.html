@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#d32f2f">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Radicale">
+  <title>Radio Radicale - Riascolta</title>
+  
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="app-header">
+    <h1>Radio Radicale</h1>
+    <p class="subtitle">Archivio Palinsesto Riascolta</p>
+  </header>
+
+  <main class="container">
+    <section class="date-controls">
+      <button id="btn-prev" aria-label="Giorno precedente">◀</button>
+      <input type="date" id="date-picker">
+      <button id="btn-next" aria-label="Giorno successivo">▶</button>
+      <button id="btn-today" class="btn-secondary">Oggi</button>
+    </section>
+
+    <div id="status-container" class="status-container" hidden>
+      <div id="spinner" class="spinner"></div>
+      <p id="status-message">Caricamento palinsesto...</p>
+    </div>
+
+    <ul id="schedule-list" class="schedule-list" role="list"></ul>
+  </main>
+
+  <!-- Bottom Sheet / Modal Composer Condivisione -->
+  <div id="share-modal-overlay" class="modal-overlay" hidden>
+    <div class="bottom-sheet" role="dialog" aria-labelledby="modal-title">
+      <div class="sheet-header">
+        <h2 id="modal-title">Condividi Trasmissione</h2>
+        <button id="btn-modal-close" class="btn-close" aria-label="Chiudi">&times;</button>
+      </div>
+      
+      <div class="sheet-body">
+        <label for="share-note" class="input-label">Minuto esatto / Nota personale:</label>
+        <input type="text" id="share-note" placeholder="Es. Inizia al minuto 15:30 (dopo il GR)..." maxlength="140">
+
+        <label class="input-label preview-label">Anteprima messaggio:</label>
+        <div id="share-preview" class="share-preview"></div>
+
+        <div class="sheet-actions">
+          <button id="btn-modal-share" class="btn-modal-action btn-primary-action">Condividi</button>
+          <button id="btn-modal-copy" class="btn-modal-action">Copia Testo</button>
+          <a id="btn-modal-mail" class="btn-modal-action" href="#" target="_blank">Email</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" role="alert" hidden></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

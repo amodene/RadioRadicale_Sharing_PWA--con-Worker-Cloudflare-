@@ -1,0 +1,66 @@
+# ==============================================================================
+# 1. TOOLING SERVERLESS & CLOUDFLARE WORKER
+# ==============================================================================
+# Cartella creata dalla CLI Wrangler durante i test locali o il deploy
+.wrangler/
+
+# Eventuali artefatti compilati da TypeScript o bundler
+dist/
+build/
+out/
+
+# Dipendenze Node.js (se esegui npm install o usi librerie esterne)
+node_modules/
+
+# ==============================================================================
+# 2. SICUREZZA, SEGRETI E VARIABILI D'AMBIENTE
+# ==============================================================================
+# Evita categoricamente il leak accidentale di token API o chiavi private
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# ==============================================================================
+# 3. FILE DI LOG & DIAGNOSTICA
+# ==============================================================================
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ==============================================================================
+# 4. SPAZZATURA DEI SISTEMI OPERATIVI
+# ==============================================================================
+# macOS: metadati delle cartelle del Finder
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+
+# Windows: cache di anteprima miniature e layout cartelle
+Thumbs.db
+ehthumbs.db
+ehthumbs_vista.db
+desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+.directory
+
+# ==============================================================================
+# 5. AMBIENTI DI SVILUPPO E IDE (VS Code, JetBrains, ecc.)
+# ==============================================================================
+# Visual Studio Code (stato locale dell'editor)
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+*.code-workspace
+
+# JetBrains (WebStorm, Rider, ecc.)
+.idea/
+*.iml
