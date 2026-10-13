@@ -14,6 +14,12 @@
     --text-muted: #9e9e9e;
     --border: #2c2c2c;
     --overlay: rgba(0, 0, 0, 0.75);
+
+    /* Colori personalizzati azioni modal */
+    --btn-green: #2e7d32;
+    --btn-green-active: #1b5e20;
+    --btn-blue: #1976d2;
+    --btn-blue-active: #0d47a1;
 }
 
 * {
@@ -269,13 +275,41 @@ button {
     align-items: center;
     justify-content: center;
     border-radius: 8px;
+    font-weight: 600;
+    border: 1px solid transparent;
 }
 
+/* Pulsante Condividi: Rosso Primario */
 .btn-primary-action {
     background: var(--primary);
     border-color: var(--primary);
-    color: #fff;
-    font-weight: 600;
+    color: #ffffff;
+}
+
+.btn-primary-action:active {
+    background: var(--primary-hover);
+}
+
+/* Pulsante Copia Testo: Bianco su Verde */
+#btn-modal-copy {
+    background: var(--btn-green);
+    border-color: var(--btn-green);
+    color: #ffffff;
+}
+
+#btn-modal-copy:active {
+    background: var(--btn-green-active);
+}
+
+/* Pulsante Email: Bianco su Blu */
+#btn-modal-mail {
+    background: var(--btn-blue);
+    border-color: var(--btn-blue);
+    color: #ffffff;
+}
+
+#btn-modal-mail:active {
+    background: var(--btn-blue-active);
 }
 
 .status-container {
