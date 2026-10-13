@@ -16,7 +16,7 @@ export default {
   async fetch(request: Request, env: any, ctx: any): Promise<Response> {
     const url = new URL(request.url);
 
-    // Gestione Preflight CORS per client web
+    // Gestione Preflight CORS per richieste Web Browser da GitHub Pages
     if (request.method === "OPTIONS") {
       return new Response(null, {
         headers: {
@@ -31,16 +31,22 @@ export default {
       return new Response("Method Not Allowed", { status: 405 });
     }
 
-    // 1. Estrazione e validazione data
+    // 1. Estrazione e validazione parametro Data (YYYY-MM-DD)
     const today = new Date().toISOString().split("T")[0];
     const targetDate = url.searchParams.get("date") || today;
     const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
 
     if (!dateRegex.test(targetDate)) {
-      return new Response(JSON.stringify({ error: "Formato data non valido. Usare YYYY-MM-DD." }), {
-        status: 400,
-        headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" },
-      });
+      return new Response(
+        JSON.stringify({ error: "Formato data non valido. Usare YYYY-MM-DD." }),
+        {
+          status: 400,
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+        }
+      );
     }
 
     // 2. Controllo Cache Edge di Cloudflare
@@ -53,7 +59,7 @@ export default {
       return response;
     }
 
-    // 3. Scraping Target
+    // 3. Scraping Upstream verso Radio Radicale
     const targetUrl = `https://www.radioradicale.it/riascolta?data=${targetDate}`;
     const upstreamResponse = await fetch(targetUrl, {
       headers: {
@@ -65,7 +71,13 @@ export default {
     if (!upstreamResponse.ok) {
       return new Response(
         JSON.stringify({ error: `Errore sorgente Radio Radicale: HTTP ${upstreamResponse.status}` }),
-        { status: 502, headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" } }
+        {
+          status: 502,
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+        }
       );
     }
 
@@ -124,7 +136,7 @@ function parseScheduleHtml(html: string, baseUrl: string): ScheduleItem[] {
     // Salta righe di intestazione prive di formato orario valido (es. "HH:MM")
     if (!rawTime || !/^\d{1,2}[:.]\d{2}/.test(rawTime)) continue;
 
-    // Colonna 2: Contenuto / Link trasmissione
+    // Colonna 2: Contenuto / Link ID trasmissione
     const tdContent = tdMatches[1];
     const anchorMatch = tdContent.match(/<a\s+([^>]*?)>([\s\S]*?)<\/a>/i);
 
@@ -134,8 +146,8 @@ function parseScheduleHtml(html: string, baseUrl: string): ScheduleItem[] {
     if (anchorMatch) {
       const attributes = anchorMatch[1];
       const rawTitle = anchorMatch[2];
-      
-      const idAttr = attributes.match(/id=["'](.*?)["']/i);
+
+        const idAttr = attributes.match(/id=["'](.*?)["']/i);
       id = idAttr ? idAttr[1].trim() : null;
       title = cleanText(rawTitle);
     } else {
