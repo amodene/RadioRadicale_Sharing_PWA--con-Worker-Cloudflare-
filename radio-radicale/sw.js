@@ -1,4 +1,4 @@
-const CACHE_NAME = "radicale-shell-v3"; // <-- Modifica obbligatoria per forzare l'invalidazione della cache
+const CACHE_NAME = "radicale-shell-v4"; // <-- Modifica obbligatoria per forzare l'invalidazione della cache
 const STATIC_ASSETS = [
   "./",
   "./index.html",
