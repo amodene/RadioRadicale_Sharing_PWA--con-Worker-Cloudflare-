@@ -1,5 +1,5 @@
 // IMPORTANTE: Sostituire con l'endpoint URL assegnato da Cloudflare al tuo Worker
-const API_BASE_URL = "https://radioradicale-api.tuo-subdomain.workers.dev";
+const API_BASE_URL = "https://radioradicale-api.modenese-a.workers.dev/";
 
 // Elementi DOM Principali
 const datePicker = document.getElementById("date-picker");
